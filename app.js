@@ -10,11 +10,8 @@
   const seedEl = document.getElementById('seed');
   const generateBtn = document.getElementById('generate');
 
-  // URL del backend - Cambiar esta URL después de desplegar en Railway
-  // Formato: https://tu-proyecto.up.railway.app
-  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:3000'  // Desarrollo local
-    : 'https://TU-PROYECTO.up.railway.app';  // 🔴 CAMBIAR ESTO después de desplegar
+  // Como frontend y backend están en el mismo servidor Railway, usamos URL relativa
+  const API_URL = '';
 
   let currentSeed = null;
 
@@ -24,8 +21,8 @@
   function setStatus(msg, isError = false) {
     statusEl.textContent = msg;
     statusEl.style.color = isError 
-      ? 'rgba(255, 100, 100, 0.95)' 
-      : 'rgba(255, 255, 255, 0.80)';
+      ? '#c41e3a'  // Rojo navideño para errores
+      : '#8b8680';  // Gris suave para info
   }
 
   /**
