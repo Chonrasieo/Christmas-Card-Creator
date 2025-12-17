@@ -86,8 +86,11 @@ async function generateImage(prompt, apiKey, options = {}) {
   const fullUrl = `https://enter.pollinations.ai/api/generate/image/${encodedPrompt}?${params.toString()}`;
   
   console.log('[Pollinations] Iniciando generación...');
+  console.log('[Pollinations] Model:', model);
   console.log('[Pollinations] Seed:', seed);
   console.log('[Pollinations] Resolución:', `${width}x${height}`);
+  console.log('[Pollinations] URL length:', fullUrl.length);
+  console.log('[Pollinations] Params:', params.toString());
   
   // Railway no tiene límite estricto, pero ponemos uno razonable
   const controller = new AbortController();
@@ -107,8 +110,10 @@ async function generateImage(prompt, apiKey, options = {}) {
     
     if (!response.ok) {
       const errorText = await response.text().catch(() => 'Sin detalles');
-      console.error('[Pollinations] Error:', response.status, errorText.substring(0, 200));
-      throw new Error(`Error ${response.status} de Pollinations API`);
+      console.error('[Pollinations] ❌ Error HTTP:', response.status);
+      console.error('[Pollinations] Response headers:', JSON.stringify([...response.headers]));
+      console.error('[Pollinations] Error body:', errorText.substring(0, 500));
+      throw new Error(`Error ${response.status} de Pollinations API: ${errorText.substring(0, 100)}`);
     }
     
     const buffer = await response.buffer();
@@ -142,20 +147,22 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Servir archivos estáticos (HTML, CSS, JS)
-app.use(express.static('.'));
-
 // Endpoint principal
 app.post('/api/generate', async (req, res) => {
   console.log('[API] Nueva solicitud de generación');
   
-  const apiKey = process.env.POLLINATIONS_API_KEY;
+  let apiKey = process.env.POLLINATIONS_API_KEY;
   if (!apiKey) {
     console.error('[API] ❌ POLLINATIONS_API_KEY no configurada');
     return res.status(500).json({ 
       error: 'Configuración del servidor incompleta' 
     });
   }
+  
+  // Limpiar espacios (importante!)
+  apiKey = apiKey.trim();
+  console.log('[API] API Key length:', apiKey.length);
+  console.log('[API] API Key preview:', apiKey.substring(0, 10) + '...');
   
   try {
     const { name, wish, message, seed, model, width, height, enhance } = req.body;
@@ -201,7 +208,13 @@ app.post('/api/generate', async (req, res) => {
   }
 });
 
-// Manejo de rutas no encontradas
+// Servir archivos estáticos (HTML, CSS, JS) - DESPUÉS de las rutas API
+app.use(express.static('.', {
+  extensions: ['html', 'htm'],
+  index: 'index.html'
+}));
+
+// Manejo de rutas no encontradas (debe ser el ÚLTIMO)
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint no encontrado' });
 });
