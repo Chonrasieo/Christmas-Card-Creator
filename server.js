@@ -142,6 +142,9 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Servir archivos estáticos (HTML, CSS, JS)
+app.use(express.static('.'));
+
 // Endpoint principal
 app.post('/api/generate', async (req, res) => {
   console.log('[API] Nueva solicitud de generación');
