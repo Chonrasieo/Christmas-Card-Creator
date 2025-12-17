@@ -14,7 +14,7 @@
   // Formato: https://tu-proyecto.up.railway.app
   const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000'  // Desarrollo local
-    : 'https://christmas-card-creator.up.railway.app';  // 🔴 CAMBIAR ESTO después de desplegar
+    : 'https://TU-PROYECTO.up.railway.app';  // 🔴 CAMBIAR ESTO después de desplegar
 
   let currentSeed = null;
 
@@ -46,7 +46,7 @@
     const message = document.getElementById('message').value.trim();
 
     if (!name || !wish) {
-      setStatus('❌ Por favor completa el nombre y el deseo', true);
+      setStatus('❌ Please complete the name and wish fields', true);
       return;
     }
 
@@ -55,7 +55,7 @@
 
     // Deshabilitar el botón mientras se genera
     generateBtn.disabled = true;
-    setStatus('🎨 Generando tu postal navideña... (puede tardar 10-20 segundos)');
+    setStatus('🎨 Generating your Christmas postcard...');
 
     try {
       // Llamar a la API backend
@@ -103,7 +103,7 @@
       console.error('Error al generar postal:', error);
       
       if (error.message.includes('Failed to fetch')) {
-        setStatus('❌ No se pudo conectar con el servidor. Verifica que el backend esté corriendo.', true);
+        setStatus('❌ Could not connect to server. Please verify the backend is running.', true);
       } else {
         setStatus(`❌ Error: ${error.message}`, true);
       }
