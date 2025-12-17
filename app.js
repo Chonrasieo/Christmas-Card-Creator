@@ -14,7 +14,7 @@
   // Formato: https://tu-proyecto.up.railway.app
   const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000'  // Desarrollo local
-    : 'https://TU-PROYECTO.up.railway.app';  // 🔴 CAMBIAR ESTO después de desplegar
+    : 'https://christmas-card-creator.up.railway.app';  // 🔴 CAMBIAR ESTO después de desplegar
 
   let currentSeed = null;
 
