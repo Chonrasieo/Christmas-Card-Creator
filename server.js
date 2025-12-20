@@ -64,7 +64,7 @@ function buildPrompt(name, wish, message) {
  */
 async function generateImage(prompt, apiKey, options = {}) {
   const {
-    model = 'nanobanana-pro',
+    model = 'zimage',
     width = 1536,
     height = 1024,
     seed = null,
@@ -172,7 +172,7 @@ app.post('/api/generate', async (req, res) => {
     
     // Generar la imagen
     const imageBuffer = await generateImage(prompt, apiKey, {
-      model: model || 'nanobanana-pro',
+      model: model || 'zimage',
       width: width || 1536,
       height: height || 1024,
       seed: seed || null,
