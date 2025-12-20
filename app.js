@@ -66,7 +66,7 @@
           wish: wish,
           message: message || 'With love.',
           seed: currentSeed,
-          model: 'nanobanana-pro',
+          model: 'zimage',
           width: 1536,  // Alta resolución - Railway aguanta!
           height: 1024,
         }),
