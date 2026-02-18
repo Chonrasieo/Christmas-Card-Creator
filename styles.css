@@ -1,4 +1,3 @@
-
 /* Christmas Postcard Creator - Festive Styling */
 
 :root {
@@ -354,8 +353,8 @@ button:disabled {
 }
 
 .pollinations-badge {
-  height: 24px;
-  width: auto;
+  height: 28px;
+  width: 222.5px;
 }
 
 /* Loading Animation */
